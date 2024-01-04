@@ -22,6 +22,8 @@
     'depends': ['base'],
 
     'data': [
+        'views/l10n_ec_barter_views.xml',
+        'views/res_partner_view.xml'
     ],
     'demo': [
     ],
