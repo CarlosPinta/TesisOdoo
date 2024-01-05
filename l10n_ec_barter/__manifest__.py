@@ -19,11 +19,13 @@
     'category': 'Products',
     'version': '0.1',
 
-    'depends': ['base'],
+    'depends': ['base', 'product'],
 
     'data': [
         'views/l10n_ec_barter_views.xml',
-        'views/res_partner_view.xml'
+        'views/res_partner_view.xml',
+        'views/res_users_views.xml',
+        'views/product_template_views.xml',
     ],
     'demo': [
     ],

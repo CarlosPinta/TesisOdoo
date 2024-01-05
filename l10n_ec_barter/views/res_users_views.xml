@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+
+    <record id="l10n_ec_barter_administration_users_form" model="ir.ui.view">
+        <field name="name">l10n_ec_barter_administration_users_form</field>
+        <field name="model">res.users</field>
+        <field name="inherit_id" ref="base.view_users_form"/>
+        <field name="mode">primary</field>
+        <field name="priority">24</field>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='email']" position="replace">
+                <field name="email"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="l10n_ec_barter_administration_users_tree" model="ir.ui.view">
+        <field name="name">l10n_ec_barter_administration_users_tree</field>
+        <field name="model">res.users</field>
+        <field name="inherit_id" ref="base.view_users_tree"/>
+        <field name="mode">primary</field>
+        <field name="priority">24</field>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='login']" position="after">
+                <field name="email"/>
+            </xpath>
+        </field>
+    </record>
+    <record id="l10n_ec_barter_administration_users_search" model="ir.ui.view">
+        <field name="name">res_partner_my_profile_search</field>
+        <field name="model">res.partner</field>
+        <field name="arch" type="xml">
+            <search>
+                <filter string="Nombre" name="name"
+                        domain="[]"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="l10n_ec_barter_res_users_action" model="ir.actions.act_window">
+        <field name="name">Usuarios</field>
+        <field name="res_model">res.users</field>
+        <field name="search_view_id" ref="l10n_ec_barter_administration_users_search"/>
+        <field name="view_ids" eval="[(5, 0, 0),
+                (0, 0, {'view_mode': 'tree', 'view_id': ref('l10n_ec_barter_administration_users_tree')}),
+                (0, 0, {'view_mode': 'form', 'view_id': ref('l10n_ec_barter_administration_users_form')})]"/>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem
+            id="l10n_ec_barter_administration"
+            name="Administración"
+            parent="l10n_ec_barter_menu"
+            sequence="10"/>
+    <menuitem
+            id="l10n_ec_barter_administration_users"
+            name="Usuarios"
+            action="l10n_ec_barter_res_users_action"
+            parent="l10n_ec_barter_administration"
+            sequence="1"/>
+</odoo>

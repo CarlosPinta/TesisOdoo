@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <odoo>
+    <!--    Menu principal de Aplicacion Trueque-->
     <menuitem
             id="l10n_ec_barter_menu"
             name="Trueque"
             web_icon="l10n_ec_barter,static/description/icon.png"
             sequence="1"/>
+
 </odoo>
