@@ -46,6 +46,7 @@
                 (0, 0, {'view_mode': 'kanban', 'view_id': ref('l10n_ec_barter_product_template_kanban')}),
                 (0, 0, {'view_mode': 'form', 'view_id': ref('l10n_ec_barter_product_template_form')})]"/>
         <field name="view_mode">kanban,form</field>
+        <field name="domain">[('l10n_ec_user_id','=', uid)]</field>
         <field name="context">{
             'search_default_my_products': 1,
             }
