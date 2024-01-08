@@ -4,6 +4,7 @@
     <menuitem
             id="l10n_ec_barter_menu"
             name="Trueque"
+            groups="client_barter_group,admin_barter_group"
             web_icon="l10n_ec_barter,static/description/icon.png"
             sequence="1"/>
 

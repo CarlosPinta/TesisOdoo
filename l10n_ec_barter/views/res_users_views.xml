@@ -50,6 +50,7 @@
     <menuitem
             id="l10n_ec_barter_administration"
             name="Administración"
+            groups="admin_barter_group"
             parent="l10n_ec_barter_menu"
             sequence="10"/>
     <menuitem
@@ -57,5 +58,6 @@
             name="Usuarios"
             action="l10n_ec_barter_res_users_action"
             parent="l10n_ec_barter_administration"
+            groups="admin_barter_group"
             sequence="1"/>
 </odoo>

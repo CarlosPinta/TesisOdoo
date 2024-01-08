@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="admin_barter_group" model="res.groups">
+        <field name="name">Administrador del Sitio</field>
+        <field name="category_id" ref="barter_application"/>
+        <field name="comment">Tiene la posibilidad de activar o desactivar usuarios, obtener reportes e identificar
+            todos los productos
+        </field>
+    </record>
+    <record id="client_barter_group" model="res.groups">
+        <field name="name">Usuario Trueque</field>
+        <field name="category_id" ref="barter_application"/>
+        <field name="comment">Tiene la posibilidad de crear productos, y realizar trueques</field>
+    </record>
+</odoo>

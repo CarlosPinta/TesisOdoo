@@ -1,2 +1,4 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access_l10n_ec_barter_l10n_ec_barter,l10n_ec_barter.l10n_ec_barter,model_l10n_ec_barter_l10n_ec_barter,base.group_user,1,1,1,1
+
+access_client_barter_group_res_partner,access_client_barter_group_res_partner,base.model_res_partner,client_barter_group,1,1,1,0
+access_client_barter_group_res_partner,access_client_barter_group_res_partner,base.model_res_partner,client_barter_group,1,1,1,0

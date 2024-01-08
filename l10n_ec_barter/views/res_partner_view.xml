@@ -19,7 +19,13 @@
         <field name="mode">primary</field>
         <field name="priority">24</field>
         <field name="arch" type="xml">
-            <xpath expr="//field[@name='function']" position="replace">
+            <!--            Eliminar de la vista original-->
+            <xpath expr="//field[@name='user_id']" position="replace"/>
+            <xpath expr="//field[@name='activity_ids']" position="replace"/>
+            <xpath expr="//field[@name='city']" position="replace"/>
+            <xpath expr="//field[@name='country_id']" position="replace"/>
+            <xpath expr="//field[@name='active']" position="attributes">
+                <attributes name="invisible">0</attributes>
             </xpath>
         </field>
     </record>
@@ -29,7 +35,7 @@
         <field name="arch" type="xml">
             <search>
                 <filter string="Mi Usuario" name="my_user"
-                        domain="[('partner_user_id', '=', uid)]"/>
+                        domain="[('l10n_ec_partner_user_id', '=', uid)]"/>
             </search>
         </field>
     </record>
@@ -50,6 +56,7 @@
     <menuitem
             id="l10n_ec_barter_res_partner_menu"
             name="Mi perfil"
+            groups="client_barter_group,admin_barter_group"
             action="l10n_ec_barter_res_partner_action"
             parent="l10n_ec_barter_menu"
             sequence="1"/>

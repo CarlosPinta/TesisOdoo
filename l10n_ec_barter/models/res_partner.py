@@ -9,13 +9,21 @@ class ResPartner(models.Model):
         partners = self.search([])
         for this in partners:
             if this.id == self.env.user.partner_id.id:
-                this.partner_user_id = self.env.user.id
+                this.l10n_ec_partner_user_id = self.env.user.id
 
-    partner_user_id = fields.Many2one(
+    l10n_ec_partner_user_id = fields.Many2one(
         'res.users',
         compute='_compute_partner_user_id',
         store=True,
         string='Usuario Actual'
+    )
+    l10n_ec_state = fields.Selection([
+        ('not_published', 'No Publicado'),
+        ('published', 'Publicado'),
+        ('discarded', 'Descartado')
+    ],
+        string='Estado',
+        default='not_published'
     )
 
     @api.model
@@ -23,3 +31,12 @@ class ResPartner(models.Model):
         res = super().get_view(view_id, view_type, **options)
         self._compute_partner_user_id()
         return res
+
+    def action_published(self):
+        return True
+
+    def action_discard(self):
+        return True
+
+    def action_not_published(self):
+        return True

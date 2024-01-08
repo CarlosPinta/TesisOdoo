@@ -32,8 +32,8 @@
         <field name="model">product.template</field>
         <field name="arch" type="xml">
             <search>
-               <filter string="Mis productos" name="my_user"
-                        domain="[('user_id', '=', uid)]"/>
+                <filter string="Mis productos" name="my_products"
+                        domain="[('l10n_ec_user_id', '=', uid)]"/>
             </search>
         </field>
     </record>
@@ -46,11 +46,16 @@
                 (0, 0, {'view_mode': 'kanban', 'view_id': ref('l10n_ec_barter_product_template_kanban')}),
                 (0, 0, {'view_mode': 'form', 'view_id': ref('l10n_ec_barter_product_template_form')})]"/>
         <field name="view_mode">kanban,form</field>
+        <field name="context">{
+            'search_default_my_products': 1,
+            }
+        </field>
     </record>
 
     <record id="l10n_ec_barter_product_template_action" model="ir.actions.act_window">
         <field name="name">Productos</field>
         <field name="res_model">product.template</field>
+        <field name="domain">[('l10n_ec_state','=', 'published')]</field>
         <field name="search_view_id" ref="l10n_ec_barter_product_template_search"/>
         <field name="view_ids" eval="[(5, 0, 0),
                 (0, 0, {'view_mode': 'kanban', 'view_id': ref('l10n_ec_barter_product_template_kanban')}),
@@ -62,12 +67,14 @@
             id="l10n_ec_barter_my_product_template_menu"
             action="l10n_ec_barter_my_product_template_action"
             name="Mis Productos"
+            groups="client_barter_group,admin_barter_group"
             parent="l10n_ec_barter_menu"
             sequence="2"/>
     <menuitem
             id="l10n_ec_barter_product_template_menu"
             action="l10n_ec_barter_product_template_action"
             name="Productos"
+            groups="client_barter_group,admin_barter_group"
             parent="l10n_ec_barter_menu"
             sequence="3"/>
 </odoo>
