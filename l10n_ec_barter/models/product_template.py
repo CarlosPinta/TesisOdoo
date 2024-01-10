@@ -16,3 +16,15 @@ class ProductTemplate(models.Model):
         string='Estado',
         default='not_published'
     )
+
+    def action_published(self):
+        for this in self:
+            this.l10n_ec_state = 'published'
+
+    def action_discarded(self):
+        for this in self:
+            this.l10n_ec_state = 'discarded'
+
+    def action_not_published(self):
+        for this in self:
+            this.l10n_ec_state = 'not_published'

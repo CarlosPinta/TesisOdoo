@@ -9,6 +9,15 @@
         <field name="arch" type="xml">
             <xpath expr="//field[@name='function']" position="replace">
             </xpath>
+            <xpath expr="//notebook" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath><xpath expr="//field[@name='company_type']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+             <xpath expr="//sheet/div/div" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+
         </field>
     </record>
 
@@ -48,6 +57,7 @@
                 (0, 0, {'view_mode': 'tree', 'view_id': ref('res_partner_my_profile_tree')}),
                 (0, 0, {'view_mode': 'form', 'view_id': ref('res_partner_my_profile_form')})]"/>
         <field name="view_mode">tree,form</field>
+        <field name="domain">[('l10n_ec_partner_user_id','=', uid)]</field>
         <field name="context">{
             'search_default_my_user': 1,
             }
