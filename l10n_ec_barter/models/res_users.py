@@ -5,9 +5,11 @@ class ResUsers(models.Model):
     _inherit = 'res.users'
 
     l10n_ec_state = fields.Selection([
-        ('draft', 'Draft'),
-        ('published', 'Published')
-    ])
+        ('active', 'Activo'),
+        ('inactive', 'Inactivo')
+    ], string='Estado',
+        default='active'
+    )
 
     @api.model
     def signup(self, values, token=None):
@@ -24,3 +26,11 @@ class ResUsers(models.Model):
                 ])]
             })
         return res
+
+    def l10n_ec_action_active(self):
+        for this in self:
+            this.l10n_ec_state = 'active'
+
+    def l10n_ec_action_inactive(self):
+        for this in self:
+            this.l10n_ec_state = 'inactive'

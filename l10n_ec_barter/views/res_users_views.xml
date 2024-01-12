@@ -14,7 +14,21 @@
             <xpath expr="//notebook" position="attributes">
                 <attribute name="invisible">1</attribute>
             </xpath>
-
+            <xpath expr="//div[@name='button_box']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//field[@name='state']" position="after">
+                <field name="l10n_ec_state" widget="statusbar"/>
+            </xpath>
+            <xpath expr="//field[@name='state']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//header" position="inside">
+                <button string="Activar" type="object" name="l10n_ec_action_active"
+                        context="{'create_user': 1}" attrs="{'invisible': [('l10n_ec_state', '!=', 'inactive')]}"/>
+                <button string="Desactivar" type="object" name="l10n_ec_action_inactive"
+                        context="{'create_user': 1}" attrs="{'invisible': [('l10n_ec_state', '!=', 'active')]}"/>
+            </xpath>
         </field>
     </record>
 
@@ -27,6 +41,10 @@
         <field name="arch" type="xml">
             <xpath expr="//field[@name='login']" position="after">
                 <field name="email"/>
+            </xpath>
+            <xpath expr="//field[@name='state']" position="after">
+                <field name="l10n_ec_state" widget="badge" decoration-danger="l10n_ec_state == 'inactive'"
+                       decoration-success="l10n_ec_state == 'active'"/>
             </xpath>
         </field>
     </record>

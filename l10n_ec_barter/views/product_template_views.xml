@@ -11,9 +11,13 @@
             <xpath expr="//header" position="replace">
                 <header>
                     <field name="l10n_ec_state" widget="statusbar"/>
-                    <button string="Publicar" type="object" name="action_published"/>
-                    <button string="Descartar" type="object" name="action_discarded"/>
-                    <button string="Regresar a Borrador" type="object" name="action_not_published"/>
+                    <field name="l10n_ec_user_id" invisible="1"/>
+                    <button string="Publicar" type="object" name="action_published"
+                            attrs="{'invisible': [('l10n_ec_state','!=','not_published')]}"/>
+                    <button string="Descartar" type="object" name="action_discarded"
+                            attrs="{'invisible': [ ('l10n_ec_state','!=','published')]}"/>
+                    <button string="Regresar a Borrador" type="object" name="action_not_published"
+                            attrs="{'invisible': [('l10n_ec_state','not in',['published','discarded'])]}"/>
                 </header>
             </xpath>
         </field>

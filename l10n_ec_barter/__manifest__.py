@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 {
     'name': "l10n_ec_barter",
 
@@ -26,14 +25,15 @@
     ],
 
     'data': [
+        'data/ir.module.category.csv',
+        'data/res_groups_data.xml',
         'views/l10n_ec_barter_views.xml',
         'views/res_partner_view.xml',
         'views/res_users_views.xml',
         'views/product_template_views.xml',
-        'data/ir.module.category.csv',
-        'data/res_groups_data.xml',
         'security/ir.model.access.csv',
     ],
     'demo': [
     ],
 }
+# -*- coding: utf-8 -*-
