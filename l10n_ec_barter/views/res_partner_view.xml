@@ -7,6 +7,13 @@
         <field name="mode">primary</field>
         <field name="priority">24</field>
         <field name="arch" type="xml">
+            <xpath expr="//form" position="inside">
+                <header>
+                    <field name="l10n_ec_approve_process" invisible="1"/>
+                    <button string="Aumentar Permisos" type="object" name="request_permission"
+                       attrs="{'invisible': [('l10n_ec_approve_process', '=', True )]}"/>
+                </header>
+            </xpath>
             <xpath expr="//field[@name='function']" position="replace">
             </xpath>
             <xpath expr="//notebook" position="attributes">

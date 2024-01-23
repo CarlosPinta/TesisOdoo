@@ -1,4 +1,4 @@
-from odoo import models, api, fields
+from odoo import models, api, fields, Command
 
 
 class ResUsers(models.Model):
@@ -34,3 +34,18 @@ class ResUsers(models.Model):
     def l10n_ec_action_inactive(self):
         for this in self:
             this.l10n_ec_state = 'inactive'
+
+    def approve_permission(self):
+        for this in self:
+            this.l10n_ec_approve_process = False
+            group_adm = self.env.ref('l10n_ec_barter.admin_barter_group')
+            this.write({'groups_id': [Command.link(group_adm.id)]})
+
+    def rejected_permission(self):
+        for this in self:
+            this.l10n_ec_approve_process = False
+            html = (
+                '<div class="o_mail_notification">El usuario {name} ha rechazado la solicitud para '
+                'obtener permiso de administrador</div>'.format(
+                    name=this.name))
+            this.partner_id.message_post(body=html)

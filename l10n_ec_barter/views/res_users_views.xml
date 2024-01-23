@@ -24,10 +24,17 @@
                 <attribute name="invisible">1</attribute>
             </xpath>
             <xpath expr="//header" position="inside">
+                <field name="l10n_ec_approve_process" invisible="1"/>
                 <button string="Activar" type="object" name="l10n_ec_action_active"
                         context="{'create_user': 1}" attrs="{'invisible': [('l10n_ec_state', '!=', 'inactive')]}"/>
                 <button string="Desactivar" type="object" name="l10n_ec_action_inactive"
                         context="{'create_user': 1}" attrs="{'invisible': [('l10n_ec_state', '!=', 'active')]}"/>
+                <button string="Aprobar" type="object" name="approve_permission"
+                        context="{'create_user': 1}"
+                        attrs="{'invisible': ['|',('l10n_ec_state', '!=', 'active'), ('l10n_ec_approve_process', '=', False )]}"/>
+                <button string="Rechazar" type="object" name="rejected_permission"
+                        context="{'create_user': 1}"
+                        attrs="{'invisible': ['|',('l10n_ec_state', '!=', 'active'), ('l10n_ec_approve_process', '=', False )]}"/>
             </xpath>
         </field>
     </record>

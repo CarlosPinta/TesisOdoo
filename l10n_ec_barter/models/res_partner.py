@@ -1,4 +1,5 @@
 from odoo import models, api, fields
+from odoo.exceptions import ValidationError, UserError
 
 
 class ResPartner(models.Model):
@@ -17,13 +18,9 @@ class ResPartner(models.Model):
         store=True,
         string='Usuario Actual'
     )
-    l10n_ec_state = fields.Selection([
-        ('not_published', 'No Publicado'),
-        ('published', 'Publicado'),
-        ('discarded', 'Descartado')
-    ],
-        string='Estado',
-        default='not_published'
+    l10n_ec_approve_process = fields.Boolean(
+        string="En proceso de aprobación",
+        default=False
     )
 
     @api.model
@@ -32,11 +29,19 @@ class ResPartner(models.Model):
         self._compute_partner_user_id()
         return res
 
-    def action_published(self):
-        return True
+    def request_permission(self):
+        users = self.env['res.users'].sudo().search([])
+        for this in self:
+            if not this.l10n_ec_partner_user_id.id == self.env.user.id:
+                raise ValidationError("Usted no puede pedir autorización para aumentar permisos de usuario")
+            if self.env.user.has_group('l10n_ec_barter.admin_barter_group'):
+                raise UserError("Usted ya tiene el permiso de Administrador")
+            user_admin = users.filtered(lambda sh: sh.has_group('l10n_ec_barter.admin_barter_group'))
+            this.l10n_ec_approve_process = True
+            html = (
+                '<div class="o_mail_notification">El usuario : {name} requiere acceso de administrador, si es correcto'
+                'acceda al menu de Usuarios y apruebe las solicitud caso contrario rechace la solicitud</div>'.format(
+                    name=this.name))
+            for user in user_admin:
+                user.partner_id.message_post(body=html)
 
-    def action_discard(self):
-        return True
-
-    def action_not_published(self):
-        return True
