@@ -31,6 +31,7 @@
         'views/res_partner_view.xml',
         'views/res_users_views.xml',
         'views/product_template_views.xml',
+        'wizard/l10n_ec_barter_wizard.xml',
         'security/ir.model.access.csv',
     ],
     'demo': [

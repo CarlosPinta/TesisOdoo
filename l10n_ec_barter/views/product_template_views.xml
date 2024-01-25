@@ -18,8 +18,22 @@
                             attrs="{'invisible': [ ('l10n_ec_state','!=','published')]}"/>
                     <button string="Regresar a Borrador" type="object" name="action_not_published"
                             attrs="{'invisible': [('l10n_ec_state','not in',['published','discarded'])]}"/>
+                    <button string="Ofertar" type="object" name="action_propose_barter"/>
+<!--                            attrs="{'invisible': ['|',('l10n_ec_state','not in',['published']),('l10n_ec_user_id','=', uid)]}"/>-->
                 </header>
             </xpath>
+            <notebook>
+                <page string="Ofertas">
+                    <field name="l10n_ec_barter_line_ids" readonly="1">
+                        <tree>
+                            <field name="main_product_id"/>
+                            <field name="product_offered_id"/>
+                            <field name="date"/>
+                            <field name="message"/>
+                        </tree>
+                    </field>
+                </page>
+            </notebook>
         </field>
     </record>
 
