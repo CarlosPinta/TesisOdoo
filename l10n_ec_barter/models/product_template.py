@@ -23,6 +23,9 @@ class ProductTemplate(models.Model):
         "main_product_id",
         string='Ofertas'
     )
+    l10n_ec_description = fields.Text(
+        string='Descripción del Producto'
+    )
 
     def action_published(self):
         for this in self:
@@ -74,5 +77,9 @@ class L10nEcProductTemplateBarter(models.Model):
     )
 
     def accept_barter(self):
+        for this in self:
+            return True
+
+    def decline_barter(self):
         for this in self:
             return True

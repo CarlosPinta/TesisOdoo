@@ -18,22 +18,36 @@
                             attrs="{'invisible': [ ('l10n_ec_state','!=','published')]}"/>
                     <button string="Regresar a Borrador" type="object" name="action_not_published"
                             attrs="{'invisible': [('l10n_ec_state','not in',['published','discarded'])]}"/>
-                    <button string="Ofertar" type="object" name="action_propose_barter"/>
-<!--                            attrs="{'invisible': ['|',('l10n_ec_state','not in',['published']),('l10n_ec_user_id','=', uid)]}"/>-->
+                    <button string="Ofertar" type="object" name="action_propose_barter"
+                            attrs="{'invisible': [('l10n_ec_state','not in',['published'])]}"/>
                 </header>
             </xpath>
-            <notebook>
-                <page string="Ofertas">
+            <xpath expr="//notebook" position="inside">
+                <page string="Ofertas" attrs="{'invisible':[('l10n_ec_state','not in',('published','exchange'))]}">
                     <field name="l10n_ec_barter_line_ids" readonly="1">
                         <tree>
-                            <field name="main_product_id"/>
+                            <field name="main_product_id" invisible="1"/>
                             <field name="product_offered_id"/>
                             <field name="date"/>
                             <field name="message"/>
+                            <button string="Aceptar" type="object" name="accept_barter"/>
+                            <button string="Rechazar" type="object" name="decline_barter"/>
                         </tree>
                     </field>
                 </page>
-            </notebook>
+            </xpath>
+            <xpath expr="//page[@name='general_information']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//field[@name='sale_ok']" position="before">
+                <field name="l10n_ec_description"/>
+            </xpath>
+            <xpath expr="//field[@name='sale_ok']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//field[@name='purchase_ok']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
         </field>
     </record>
 
@@ -45,7 +59,26 @@
         <field name="priority">24</field>
         <field name="arch" type="xml">
             <xpath expr="//field[@name='id']" position="after">
-                <field name="name"/>
+                <field name="l10n_ec_description"/>
+                <field name="l10n_ec_user_id"/>
+            </xpath>
+            <xpath expr="//div[hasclass('oe_kanban_details')]" position="replace">
+                <div class="oe_kanban_details">
+                    <strong class="o_kanban_record_title">
+                        <field name="name"/>
+                        <small t-if="record.default_code.value">[<field name="default_code"/>]
+                        </small>
+                    </strong>
+                    <div>
+                        <strong>Responsable:</strong>
+                        <field name="l10n_ec_user_id"/>
+                    </div>
+                    <div>
+                        <strong>Descripción:</strong>
+                        <br/>
+                        <field name="l10n_ec_description"/>
+                    </div>
+                </div>
             </xpath>
         </field>
     </record>
