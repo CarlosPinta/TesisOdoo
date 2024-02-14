@@ -28,10 +28,14 @@
                         <tree>
                             <field name="main_product_id" invisible="1"/>
                             <field name="product_offered_id"/>
+                            <field name="offered_user_id"/>
                             <field name="date"/>
                             <field name="message"/>
-                            <button string="Aceptar" type="object" name="accept_barter"/>
-                            <button string="Rechazar" type="object" name="decline_barter"/>
+                            <field name="state"/>
+                            <button string="Aceptar" type="object" name="accept_barter" icon="fa-check"
+                                    class="btn-success" attrs="{'invisible':[('state','not in',('pending'))]}"/>
+                            <button string="Rechazar" type="object" name="decline_barter" icon="fa-ban"
+                                    class="btn-danger" attrs="{'invisible':[('state','not in',('pending'))]}"/>
                         </tree>
                     </field>
                 </page>
@@ -39,8 +43,14 @@
             <xpath expr="//page[@name='general_information']" position="attributes">
                 <attribute name="invisible">1</attribute>
             </xpath>
-            <xpath expr="//field[@name='sale_ok']" position="before">
-                <field name="l10n_ec_description"/>
+            <xpath expr="//div[@name='options']" position="before">
+                <group col="2">
+                    <field name="l10n_ec_user_id" readonly="1" options="{'no_open': True, 'no_create': True}"/>
+                </group>
+                <group name="description_group" string="Description" colspan="4">
+                    <field name="l10n_ec_description" nolabel="1" colspan="2"
+                           placeholder="Ingrese la descripción del producto"/>
+                </group>
             </xpath>
             <xpath expr="//field[@name='sale_ok']" position="attributes">
                 <attribute name="invisible">1</attribute>
@@ -90,6 +100,7 @@
             <search>
                 <filter string="Mis productos" name="my_products"
                         domain="[('l10n_ec_user_id', '=', uid)]"/>
+                 <filter string="Por Estado" name="group_state" domain="[]" context="{'group_by': 'l10n_ec_state'}" />
             </search>
         </field>
     </record>
@@ -105,6 +116,7 @@
         <field name="domain">[('l10n_ec_user_id','=', uid)]</field>
         <field name="context">{
             'search_default_my_products': 1,
+            'search_default_group_state': 1,
             }
         </field>
     </record>

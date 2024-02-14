@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <!--        Nueva Oferta-->
+        <record id="mail_template_product_barter_offer" model="mail.template">
+            <field name="name">Oferta Nueva</field>
+            <field name="model_id" ref="l10n_ec_barter.model_l10n_ec_product_template_barter"/>
+            <field name="email_from">{{ (object.offered_user_id.email_formatted or user.email_formatted) }}</field>
+            <field name="email_to">{{ object.main_user_id.partner_id.id }}</field>
+            <field name="subject">Nueva oferta para el producto: {{object.main_product_id.name or 'n/a'}}</field>
+            <field name="lang">{{ object.main_user_id.partner_id.lang }}</field>
+            <field name="auto_delete" eval="True"/>
+            <field name="description">Envia al creador del producto un mensaje de una oferta nueva</field>
+            <field name="body_html" type="html">
+                <div style="margin: 0px; padding: 0px;">
+                    <p style="margin: 0px; padding: 0px; font-size: 13px;">
+                        Estimado/a
+                        <t t-if="object.main_user_id">
+                            <t t-out="object.main_user_id.name or ''"/>
+                        </t>
+                        <br/>
+                        <br/>
+                        Revise la Oferta del producto
+                        <t t-if="object.main_product_id.name">
+                            Producto
+                            <span style="font-weight:bold;" t-out="object.main_product_id.name or ''"/>
+                        </t>
+                        <p>
+                            <div style="margin: 16px 0px 16px 0px;">
+                                <a t-attf-href="/web#id={{object.main_product_id.id}}&amp;menu_id=100&amp;action=159&amp;model=product.template&amp;view_type=form"
+                                   style="background-color: #875A7B; padding: 8px 16px 8px 16px; text-decoration: none; color: #fff; border-radius: 5px; font-size:13px;">
+                                    Revise el producto
+                                </a>
+                            </div>
+                        </p>
+                    </p>
+                </div>
+            </field>
+        </record>
+
+
+         <!--        Oferta Rechazada-->
+        <record id="mail_template_product_barter_rejected" model="mail.template">
+            <field name="name">Oferta Rechazada</field>
+            <field name="model_id" ref="l10n_ec_barter.model_l10n_ec_product_template_barter"/>
+            <field name="email_from">{{ (object.main_user_id.email_formatted or user.email_formatted) }}</field>
+            <field name="email_to">{{ object.offered_user_id.email_formatted }}</field>
+            <field name="subject">Oferta aceptada para el producto: {{object.main_product_id.name or 'n/a'}}</field>
+            <field name="lang">{{ object.main_user_id.partner_id.lang }}</field>
+            <field name="auto_delete" eval="True"/>
+            <field name="description">Envia al creador del producto un mensaje de una oferta rechazada</field>
+            <field name="body_html" type="html">
+                <div style="margin: 0px; padding: 0px;">
+                    <p style="margin: 0px; padding: 0px; font-size: 13px;">
+                        Estimado/a
+                        <t t-if="object.main_user_id">
+                            <t t-out="object.main_user_id.name or ''"/>
+                        </t>
+                        <br/>
+                        <br/>
+                        La oferta ha sido rechazada
+                        <t t-if="object.main_product_id.name">
+                            Producto
+                            <span style="font-weight:bold;" t-out="object.main_product_id.name or ''"/>
+                        </t>
+                        <p>
+                            <div style="margin: 16px 0px 16px 0px;">
+                                <a t-attf-href="/web#id={{object.main_product_id.id}}&amp;menu_id=100&amp;action=159&amp;model=product.template&amp;view_type=form"
+                                   style="background-color: #875A7B; padding: 8px 16px 8px 16px; text-decoration: none; color: #fff; border-radius: 5px; font-size:13px;">
+                                    Revise el producto
+                                </a>
+                            </div>
+                        </p>
+                    </p>
+                </div>
+            </field>
+        </record>
+
+          <!--        Oferta Aceptada-->
+        <record id="mail_template_product_barter_accept" model="mail.template">
+            <field name="name">Oferta Aceptada</field>
+            <field name="model_id" ref="l10n_ec_barter.model_l10n_ec_product_template_barter"/>
+            <field name="email_from">{{ (object.main_user_id.email_formatted or user.email_formatted) }}</field>
+            <field name="email_to">{{ object.offered_user_id.email_formatted }}</field>
+            <field name="subject">Oferta aceptada para el producto: {{object.main_product_id.name or 'n/a'}}</field>
+            <field name="lang">{{ object.main_user_id.partner_id.lang }}</field>
+            <field name="auto_delete" eval="True"/>
+            <field name="description">Envia al creador del producto un mensaje de una oferta aceptada</field>
+            <field name="body_html" type="html">
+                <div style="margin: 0px; padding: 0px;">
+                    <p style="margin: 0px; padding: 0px; font-size: 13px;">
+                        Estimado/a
+                        <t t-if="object.main_user_id">
+                            <t t-out="object.main_user_id.name or ''"/>
+                        </t>
+                        <br/>
+                        <br/>
+                        La oferta ha sido aceptada
+                        <t t-if="object.main_product_id.name">
+                            Producto
+                            <span style="font-weight:bold;" t-out="object.main_product_id.name or ''"/>
+                        </t>
+                        <p>
+                            <div style="margin: 16px 0px 16px 0px;">
+                                <a t-attf-href="/web#id={{object.main_product_id.id}}&amp;menu_id=100&amp;action=159&amp;model=product.template&amp;view_type=form"
+                                   style="background-color: #875A7B; padding: 8px 16px 8px 16px; text-decoration: none; color: #fff; border-radius: 5px; font-size:13px;">
+                                    Revise el producto
+                                </a>
+                            </div>
+                        </p>
+                    </p>
+                </div>
+            </field>
+        </record>
+    </data>
+</odoo>
