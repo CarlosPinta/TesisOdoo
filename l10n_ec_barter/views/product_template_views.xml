@@ -20,6 +20,8 @@
                             attrs="{'invisible': [('l10n_ec_state','not in',['published','discarded'])]}"/>
                     <button string="Ofertar" type="object" name="action_propose_barter"
                             attrs="{'invisible': [('l10n_ec_state','not in',['published'])]}"/>
+                    <button string="Calificar" type="object" name="qualify_action" class="btn-warning"
+                            attrs="{'invisible': [('l10n_ec_state','!=','exchange')]}"/>
                 </header>
             </xpath>
             <xpath expr="//notebook" position="inside">
@@ -27,10 +29,12 @@
                     <field name="l10n_ec_barter_line_ids" readonly="1">
                         <tree>
                             <field name="main_product_id" invisible="1"/>
+                            <field name="main_user_id" invisible="1"/>
                             <field name="product_offered_id"/>
                             <field name="offered_user_id"/>
-                            <field name="date"/>
+                            <field name="price"/>
                             <field name="message"/>
+                            <field name="date"/>
                             <field name="state"/>
                             <button string="Aceptar" type="object" name="accept_barter" icon="fa-check"
                                     class="btn-success" attrs="{'invisible':[('state','not in',('pending'))]}"/>
@@ -46,10 +50,17 @@
             <xpath expr="//div[@name='options']" position="before">
                 <group col="2">
                     <field name="l10n_ec_user_id" readonly="1" options="{'no_open': True, 'no_create': True}"/>
+                    <field name="categ_id" required_="1" options="{'no_open': True, 'no_create': True}"/>
+                    <field name="list_price" required_="1"/>
+                    <field name="volume"/>
+                    <field name="weight"/>
                 </group>
                 <group name="description_group" string="Description" colspan="4">
                     <field name="l10n_ec_description" nolabel="1" colspan="2"
                            placeholder="Ingrese la descripción del producto"/>
+                </group>
+                <group col="2">
+                    <field name="l10n_ec_message" readonly="1" attrs="{'invisible': [('l10n_ec_message','=',False)]}"/>
                 </group>
             </xpath>
             <xpath expr="//field[@name='sale_ok']" position="attributes">
@@ -71,6 +82,7 @@
             <xpath expr="//field[@name='id']" position="after">
                 <field name="l10n_ec_description"/>
                 <field name="l10n_ec_user_id"/>
+                <field name="l10n_ec_message" readonly="1" attrs="{'invisible': [('l10n_ec_message','=',False)]}"/>
             </xpath>
             <xpath expr="//div[hasclass('oe_kanban_details')]" position="replace">
                 <div class="oe_kanban_details">
@@ -99,8 +111,8 @@
         <field name="arch" type="xml">
             <search>
                 <filter string="Mis productos" name="my_products"
-                        domain="[('l10n_ec_user_id', '=', uid)]"/>
-                 <filter string="Por Estado" name="group_state" domain="[]" context="{'group_by': 'l10n_ec_state'}" />
+                        domain="['|',('l10n_ec_user_id','=', uid),('offered_user_id','=', uid)]"/>
+                <filter string="Por Estado" name="group_state" domain="[]" context="{'group_by': 'l10n_ec_state'}"/>
             </search>
         </field>
     </record>
@@ -113,10 +125,9 @@
                 (0, 0, {'view_mode': 'kanban', 'view_id': ref('l10n_ec_barter_product_template_kanban')}),
                 (0, 0, {'view_mode': 'form', 'view_id': ref('l10n_ec_barter_product_template_form')})]"/>
         <field name="view_mode">kanban,form</field>
-        <field name="domain">[('l10n_ec_user_id','=', uid)]</field>
+        <field name="domain">['|',('l10n_ec_user_id','=', uid),('offered_user_id','=', uid)]</field>
         <field name="context">{
             'search_default_my_products': 1,
-            'search_default_group_state': 1,
             }
         </field>
     </record>
@@ -136,7 +147,7 @@
             id="l10n_ec_barter_my_product_template_menu"
             action="l10n_ec_barter_my_product_template_action"
             name="Mis Productos"
-            groups="client_barter_group,admin_barter_group"
+            groups="client_barter_group,admin_barter_group,no_access_barter_group"
             parent="l10n_ec_barter_menu"
             sequence="2"/>
     <menuitem

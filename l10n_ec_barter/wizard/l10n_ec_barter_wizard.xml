@@ -10,7 +10,12 @@
                     <group>
                         <field name="main_product_id" invisible="1"/>
                         <field name="user_id" invisible="1"/>
+                        <field name="type"/>
+                        <field name="price"
+                               attrs="{'invisible':[('type','!=','price')],'required':[('type','=','price')]}"/>
                         <field name="product_offered_id"
+                               attrs="{'invisible':[('type','!=','product')],'required':[('type','=','product')]}"
+                               options="{'no_quick_create': True, 'no_create_edit': True, 'no_open': True}"
                                domain="[('l10n_ec_state', '=', 'published'),('l10n_ec_user_id','=',uid)]"/>
                         <field name="message"/>
                     </group>

@@ -12,6 +12,11 @@
         <field name="category_id" ref="barter_application"/>
         <field name="comment">Tiene la posibilidad de crear productos, y realizar trueques</field>
     </record>
+    <record id="no_access_barter_group" model="res.groups">
+        <field name="name">Sin acceso</field>
+        <field name="category_id" ref="barter_application"/>
+        <field name="comment">Para usuarios desactivados</field>
+    </record>
     <!--    grupo para ocultar menus-->
     <record id="make_invisible" model="res.groups">
         <field name="name">Invisible</field>

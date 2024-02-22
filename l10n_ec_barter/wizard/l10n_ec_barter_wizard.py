@@ -12,10 +12,20 @@ class L10nEcBarterWizard(models.TransientModel):
         string="Producto Padre",
         required=True
     )
+    type = fields.Selection([
+        ('product', 'Por Producto'),
+        ('price', 'Por Valor')
+    ],
+        string="Tipo de Propuesta",
+        default='product',
+        required=True
+    )
     product_offered_id = fields.Many2one(
         'product.template',
         string="Producto Ofrecido",
-        required=True
+    )
+    price = fields.Float(
+        string="Precio"
     )
     message = fields.Char(
         string="Mensaje"
@@ -39,19 +49,21 @@ class L10nEcBarterWizard(models.TransientModel):
             date_now = datetime.today().date()
             res = {
                 "main_product_id": this.main_product_id.id,
-                "product_offered_id": this.product_offered_id.id,
+                "type": this.type,
+                "price": this.price,
+                "product_offered_id": this.product_offered_id.id if this.product_offered_id else None,
                 "message": this.message,
                 "date": date_now,
-                "user_id": this.user_id.id
+                "offered_user_id": this.user_id.id
             }
             barter = barter_line_obj.create(res)
             email_template = self.env.ref('l10n_ec_barter.mail_template_product_barter_accept')
             email_values = email_template.generate_email(barter.id, ['subject', 'body_html',
-                                                                   'email_from', 'email_to',
-                                                                   'auto_delete'])
+                                                                     'email_from', 'email_to',
+                                                                     'auto_delete'])
             email_values['model'] = 'l10n_ec.product.template.barter'
             email_values['res_id'] = barter.id
             email_values['email_to'] = barter.main_user_id.email
-            send_email = self.env['mail.mail'].create(email_values)
+            send_email = self.env['mail.mail'].sudo().create(email_values)
             send_email.send()
             return True

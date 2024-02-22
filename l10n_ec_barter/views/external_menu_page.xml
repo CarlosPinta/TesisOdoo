@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="action_l10n_ec_barter_suggested_price" model="ir.actions.act_url">
+            <field name="name">"Precios Sugeridos</field>
+            <field name="url">http://sipa.agricultura.gob.ec/</field>
+            <field name="target">new</field>
+        </record>
+        <menuitem id="menu_l10n_ec_barter_suggested_price"
+                  name="Precios Sugeridos"
+                  sequence="4"
+                  groups="client_barter_group,admin_barter_group,no_access_barter_group"
+                  parent="l10n_ec_barter_menu"
+                  action="action_l10n_ec_barter_suggested_price"/>
+    </data>
+</odoo>

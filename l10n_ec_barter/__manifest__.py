@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 {
     'name': "l10n_ec_barter",
 
@@ -21,7 +23,8 @@
     'depends': [
         'base',
         'product',
-        'muk_web_theme'
+        'muk_web_theme',
+        'web_unsplash'
     ],
 
     'data': [
@@ -32,8 +35,9 @@
         'views/res_partner_view.xml',
         'views/res_users_views.xml',
         'views/product_template_views.xml',
+        'views/external_menu_page.xml',
         'wizard/l10n_ec_barter_wizard.xml',
+        'wizard/l10n_ec_barter_rating_wizard.xml',
         'security/ir.model.access.csv',
     ],
 }
-# -*- coding: utf-8 -*-

@@ -73,7 +73,7 @@
     <menuitem
             id="l10n_ec_barter_res_partner_menu"
             name="Mi perfil"
-            groups="client_barter_group,admin_barter_group"
+            groups="client_barter_group,admin_barter_group,no_access_barter_group"
             action="l10n_ec_barter_res_partner_action"
             parent="l10n_ec_barter_menu"
             sequence="1"/>
