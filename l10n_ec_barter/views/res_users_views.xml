@@ -17,7 +17,7 @@
             <xpath expr="//page[@name='preferences']" position="attributes">
                 <attribute name="invisible">1</attribute>
             </xpath>
-             <xpath expr="//page[@name='security']" position="attributes">
+            <xpath expr="//page[@name='security']" position="attributes">
                 <attribute name="invisible">1</attribute>
             </xpath>
             <xpath expr="//notebook" position="inside">
@@ -75,7 +75,7 @@
             <xpath expr="//field[@name='lang']" position="attributes">
                 <attribute name="invisible">1</attribute>
             </xpath>
-             <xpath expr="//field[@name='login_date']" position="attributes">
+            <xpath expr="//field[@name='login_date']" position="attributes">
                 <attribute name="invisible">1</attribute>
             </xpath>
             <xpath expr="//field[@name='state']" position="attributes">
@@ -117,4 +117,85 @@
             parent="l10n_ec_barter_administration"
             groups="admin_barter_group"
             sequence="1"/>
+
+    <!--    Reportes-->
+
+    <record id="l10n_ec_barter_administration_report_search" model="ir.ui.view">
+        <field name="name">l10n_ec_barter_administration_report_search</field>
+        <field name="model">product.template</field>
+        <field name="arch" type="xml">
+            <search>
+                <separator/>
+                <filter string="Año Actual" name="current_year"
+                        domain="[('create_date','&lt;',(context_today()+relativedelta(years=1)).strftime('%Y-01-01')), ('create_date','&gt;=',time.strftime('%Y-01-01'))]"/>
+                <separator/>
+                <filter string="Año Anterior" name="prev_year"
+                        domain="[('create_date','&gt;=',(context_today()-relativedelta(years=1)).strftime('%Y-01-01')),('create_date','&lt;',time.strftime('%Y-01-01'))]"/>
+                <separator/>
+                <separator/>
+                <filter string="Mes Actual" name="current_month"
+                        domain="[('create_date','&lt;',(context_today()+relativedelta(months=1)).strftime('%Y-%m-01')), ('create_date','&gt;=',time.strftime('%Y-%m-01'))]"/>
+                <separator/>
+                <filter string="Mes Anterior" name="prev_month"
+                        domain="[('create_date','&gt;=',(context_today()-relativedelta(months=1)).strftime('%Y-%m-01')),('create_date','&lt;',time.strftime('%Y-%m-01'))]"/>
+                <separator/>
+                <filter string="Última Semana" name="prev_week"
+                        domain="[('create_date', '&gt;=', (context_today()+relativedelta(weeks=-2,days=1, weekday=0)).strftime('%Y-%m-%d')), ('create_date', '&lt;=', (context_today()+relativedelta(weeks=-1,weekday=6)).strftime('%Y-%m-%d'))]"/>
+                <separator/>
+                <filter string="Semana Actual" name="current_week"
+                        domain="[('create_date', '&lt;=', ((context_today()+relativedelta(weeks=0, weekday=-1)).strftime('%Y-%m-%d'))), ('create_date', '&gt;=', ((context_today()-relativedelta(weeks=1, weekday=0)).strftime('%Y-%m-%d')))]"/>
+                <separator/>
+                <filter string="Hoy" name="today"
+                        domain="[('create_date', '&gt;=', context_today().strftime('%Y-%m-%d 00:00:00')),('create_date', '&lt;=',context_today().strftime('%Y-%m-%d 23:23:59'))]"/>
+                <separator/>
+            </search>
+        </field>
+    </record>
+
+    <record id="l10n_ec_barter_administration_report_pivot" model="ir.ui.view">
+        <field name="name">l10n.ec.barter.administration.report.pivot</field>
+        <field name="model">product.template</field>
+        <field name="arch" type="xml">
+            <pivot>
+                <field name="l10n_ec_state" type="row"/>
+                <field name="categ_id" type="row"/>
+                <field name="l10n_ec_user_id" type="row"/>
+                <field name="name" type="row"/>
+                <field name="list_price" type="measure" operator="sum"/>
+                <field name="weight" type="measure" operator="sum"/>
+                <field name="volume" type="measure" operator="sum"/>
+            </pivot>
+        </field>
+    </record>
+
+    <record id="l10n_ec_barter_administration_report_graph" model="ir.ui.view">
+        <field name="name">l10n.ec.barter.administration.report.graph</field>
+        <field name="model">product.template</field>
+        <field name="arch" type="xml">
+            <graph>
+                <field name="l10n_ec_user_id" type="row"/>
+                <field name="l10n_ec_state" type="row"/>
+                <field name="list_price" type="measure" operator="sum"/>
+                <field name="weight" type="measure" operator="sum"/>
+                <field name="volume" type="measure" operator="sum"/>
+            </graph>
+        </field>
+    </record>
+
+    <record id="l10n_ec_barter_report_action" model="ir.actions.act_window">
+        <field name="name">Productos</field>
+        <field name="res_model">product.template</field>
+        <field name="search_view_id" ref="l10n_ec_barter_administration_report_search"/>
+        <field name="view_ids" eval="[(5, 0, 0),
+                (0, 0, {'view_mode': 'pivot', 'view_id': ref('l10n_ec_barter_administration_report_pivot')}),
+                (0, 0, {'view_mode': 'graph', 'view_id': ref('l10n_ec_barter_administration_report_graph')})]"/>
+        <field name="view_mode">tree,form</field>
+    </record>
+    <menuitem
+            id="l10n_ec_barter_administration_report"
+            name="Reportes"
+            action="l10n_ec_barter_report_action"
+            parent="l10n_ec_barter_administration"
+            groups="admin_barter_group"
+            sequence="2"/>
 </odoo>
