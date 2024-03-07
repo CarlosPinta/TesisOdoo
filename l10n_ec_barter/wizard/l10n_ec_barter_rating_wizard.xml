@@ -15,7 +15,7 @@
                         <field name="comment" required="1"/>
                     </group>
                     <footer>
-                        <button name="create_rating" string="Ofertar" type="object" class="btn-primary"
+                        <button name="create_rating" string="Calificar" type="object" class="btn-primary"
                                 data-hotkey="q"/>
                         <button string="Cancel" class="btn-secondary" special="cancel" data-hotkey="z"/>
                     </footer>
